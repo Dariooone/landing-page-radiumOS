@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon - RadiumOS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #f8fafc;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Effetti blur di sfondo - come homepage */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 50%, #0ea5e9 100%);
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.08;
+            top: -200px;
+            right: -200px;
+            z-index: 1;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.06;
+            bottom: -150px;
+            left: -150px;
+            z-index: 1;
+        }
+
+        /* Particelle animate di sfondo */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(37, 99, 235, 0.7);
+            border-radius: 50%;
+            bottom: -10px;
+            animation: floatUp 15s infinite ease-in-out;
+        }
+
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; width: 4px; height: 4px; }
+        .particle:nth-child(2) { left: 20%; animation-delay: 2s; background: rgba(30, 64, 175, 0.7); width: 5px; height: 5px; }
+        .particle:nth-child(3) { left: 35%; animation-delay: 4s; background: rgba(14, 165, 233, 0.7); width: 7px; height: 7px; }
+        .particle:nth-child(4) { left: 50%; animation-delay: 6s; width: 4px; height: 4px; }
+        .particle:nth-child(5) { left: 65%; animation-delay: 8s; background: rgba(30, 64, 175, 0.7); width: 6px; height: 6px; }
+        .particle:nth-child(6) { left: 75%; animation-delay: 3s; background: rgba(14, 165, 233, 0.6); width: 5px; height: 5px; }
+        .particle:nth-child(7) { left: 85%; animation-delay: 5s; background: rgba(37, 99, 235, 0.6); width: 4px; height: 4px; }
+        .particle:nth-child(8) { left: 15%; animation-delay: 7s; background: rgba(30, 64, 175, 0.6); width: 6px; height: 6px; }
+        .particle:nth-child(9) { left: 45%; animation-delay: 1s; background: rgba(14, 165, 233, 0.7); width: 5px; height: 5px; }
+        .particle:nth-child(10) { left: 90%; animation-delay: 9s; background: rgba(37, 99, 235, 0.6); width: 4px; height: 4px; }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(0.8);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            text-align: center;
+            z-index: 10;
+            max-width: 800px;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .logo img {
+            height: 80px;
+            width: auto;
+            object-fit: contain;
+            animation: pulse 2s infinite;
+        }
+
+        .logo h1 {
+            font-size: 3rem;
+            font-weight: 800;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 50%, #0ea5e9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h2 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 50%, #0ea5e9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        p {
+            font-size: 1.5rem;
+            color: #94a3b8;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease-out 0.4s backwards;
+        }
+
+        .countdown-item {
+            background: rgba(30, 41, 59, 0.8);
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(37, 99, 235, 0.3);
+            backdrop-filter: blur(10px);
+            min-width: 100px;
+        }
+
+        .countdown-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #2563eb 0%, #0ea5e9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+        }
+
+        .countdown-label {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 50%, #0ea5e9 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+            animation: fadeInUp 0.8s ease-out 0.6s backwards;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+        }
+
+        .notify-form {
+            margin-top: 2rem;
+            animation: fadeInUp 0.8s ease-out 0.8s backwards;
+        }
+
+        .notify-input {
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            border: 2px solid rgba(37, 99, 235, 0.3);
+            background: rgba(30, 41, 59, 0.8);
+            color: #f8fafc;
+            border-radius: 8px;
+            width: 300px;
+            margin-right: 1rem;
+            transition: all 0.3s;
+        }
+
+        .notify-input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .notify-btn {
+            padding: 1rem 2rem;
+            background: transparent;
+            color: #2563eb;
+            border: 2px solid #2563eb;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .notify-btn:hover {
+            background: #2563eb;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h2 {
+                font-size: 2.5rem;
+            }
+
+            p {
+                font-size: 1.2rem;
+            }
+
+            .countdown {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .countdown-item {
+                min-width: 80px;
+                padding: 1rem;
+            }
+
+            .countdown-number {
+                font-size: 2rem;
+            }
+
+            .logo h1 {
+                font-size: 2rem;
+            }
+
+            .logo img {
+                height: 60px;
+            }
+
+            .notify-input {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+
+            .notify-form {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <div class="container">
+        <div class="logo">
+            <h1>Radium<span>OS</span></h1>
+        </div>
+
+        <h2>Coming Soon</h2>
+        <p>Stiamo lavorando duramente per portarti qualcosa di straordinario!</p>
+
+        <div class="countdown">
+            <div class="countdown-item">
+                <span class="countdown-number" id="days">00</span>
+                <span class="countdown-label">Giorni</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number" id="hours">00</span>
+                <span class="countdown-label">Ore</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number" id="minutes">00</span>
+                <span class="countdown-label">Minuti</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number" id="seconds">00</span>
+                <span class="countdown-label">Secondi</span>
+            </div>
+        </div>
+
+        <div class="notify-form">
+            <input type="email" class="notify-input" placeholder="La tua email">
+            <button class="notify-btn">Avvisami</button>
+        </div>
+
+        <br><br>
+        <a href="index.html" class="back-btn">← Torna alla Home</a>
+    </div>
+
+    <script>
+        // Countdown timer - Data di lancio: 8 Giugno 2026
+        const launchDate = new Date('2026-06-08T23:59:59').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = launchDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                document.querySelector('.countdown').innerHTML = '<h3>È arrivato il momento! 🎉</h3>';
+            }
+        }
+
+        const countdownInterval = setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Gestione form notifiche
+        document.querySelector('.notify-btn').addEventListener('click', function() {
+            const email = document.querySelector('.notify-input').value;
+            if (email && email.includes('@')) {
+                alert('Grazie! Ti avviseremo quando saremo pronti!');
+                document.querySelector('.notify-input').value = '';
+            } else {
+                alert('Per favore inserisci un indirizzo email valido.');
+            }
+        });
+    </script>
+</body>
+</html>
